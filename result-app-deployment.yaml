@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
       - name: result-app
-        image: dockersamples/examplevotingapp_result
+        image: keaper/votingapp_result-app
         ports:
           - containerPort: 80
