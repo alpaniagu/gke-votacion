@@ -1,11 +1,8 @@
-### Example Voting App by Docker Hub
+### Ejemplo de la aplicación de votos para GKE
 
-This is based on the original [example-voting-app](https://github.com/dockersamples/example-voting-app) from docker-examples(https://github.com/dockersamples) modified to work on Kubernetes   
+Basada en la original [example-voting-app](https://github.com/dockersamples/example-voting-app) de los ejemplos de Docker(https://github.com/dockersamples) modificada para que funcione mejor en GKE
 
-
-
-Execute following commands on Any Kubernetes cluster available in Public Cloud (like Azure, AWS or GCP etc,). Reason for Public Cloud is we have two services of type Load Balancer, which can't be used on local setup.
-
+![Architecture diagram](https://github.com/dockersamples/example-voting-app/raw/master/architecture.png)
 
 Kubernetes Services : Type   
 db  : ClusterIP      
