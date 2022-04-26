@@ -1,6 +1,5 @@
-apiVersion: apps/v1
 kind: Deployment
-metadata:
+apiVersion: apps/v1
   name: postgres-deployment
   labels:
     app: demo-voting-app
@@ -8,23 +7,44 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: postgres-pod
       app: demo-voting-app
+      name: postgres-pod
   template:
     metadata:
       name: postgres-pod
+      creationTimestamp: null
       labels:
-        name: postgres-pod
         app: demo-voting-app
+        name: postgres-pod
     spec:
       containers:
-      - name: postgres
-        image: postgres:9.4
-        env:
-          - name: POSTGRES_USER
-            value: "postgres"
-          - name:  POSTGRES_PASSWORD
-            value: "postgres"
-        ports:
-          - containerPort: 5432
-
+        - name: postgres
+          image: 'postgres:9.4'
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: voting-app-db
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
